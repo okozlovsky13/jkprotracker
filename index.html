@@ -154,30 +154,30 @@ footer{font-size:10px;color:var(--dim);margin-top:40px;padding-top:16px;border-t
 .mgrid-cell .cell-dots { font-size: 7px; margin-top: 2px; display: flex; justify-content: center; gap: 2px; }
 
 /* ═══════════════════════════════════════════
-   MOBILNÍ LAYOUT (max-width: 768px)
+   MOBILNÍ LAYOUT — iPhone 16 Pro optimized
    ═══════════════════════════════════════════ */
 @media (max-width: 768px) {
 
-  /* Layout — sidebar schovat, main přes celou šířku */
+  /* Layout */
   .app { grid-template-columns: 1fr; }
   .sidebar { display: none; }
-  .main { padding: 0 0 80px 0; }
+  .main { padding: 0 0 90px 0; }
 
-  /* Mobilní top bar */
+  /* Top bar */
   .mobile-topbar {
     display: flex !important;
     align-items: center;
     justify-content: space-between;
     background: var(--s1);
-    border-bottom: 1px solid var(--border);
-    padding: 12px 16px;
+    border-bottom: 2px solid var(--accent);
+    padding: 14px 18px;
     position: sticky;
     top: 0;
     z-index: 100;
   }
   .mobile-logo {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
+    font-size: 24px;
     letter-spacing: 2px;
     color: var(--accent);
   }
@@ -185,134 +185,127 @@ footer{font-size:10px;color:var(--dim);margin-top:40px;padding-top:16px;border-t
     background: none;
     border: 1px solid var(--border);
     color: var(--muted);
-    border-radius: 3px;
-    padding: 6px 10px;
-    font-size: 16px;
+    border-radius: 4px;
+    padding: 8px 14px;
+    font-size: 18px;
     cursor: pointer;
+    line-height: 1;
   }
 
-  /* Mobilní drawer navigace */
-  .mobile-drawer {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 500;
-  }
+  /* Drawer */
+  .mobile-drawer { display: none; position: fixed; inset: 0; z-index: 500; }
   .mobile-drawer.open { display: block; }
-  .mobile-drawer-backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(30,25,20,0.5);
-  }
+  .mobile-drawer-backdrop { position: absolute; inset: 0; background: rgba(30,25,20,0.55); }
   .mobile-drawer-panel {
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 280px;
-    background: var(--s1);
-    padding: 24px 20px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    position: absolute; left: 0; top: 0; bottom: 0; width: 290px;
+    background: var(--s1); padding: 28px 22px;
+    overflow-y: auto; display: flex; flex-direction: column; gap: 20px;
   }
   .mobile-drawer-close {
-    align-self: flex-end;
-    background: none;
-    border: none;
-    font-size: 22px;
-    color: var(--muted);
-    cursor: pointer;
-    margin-bottom: -8px;
+    align-self: flex-end; background: none; border: none;
+    font-size: 26px; color: var(--muted); cursor: pointer; margin-bottom: -8px;
   }
 
-  /* Main content padding */
-  .page-header { padding: 16px 16px 0; margin-bottom: 16px; }
-  .page-title { font-size: 28px !important; }
+  /* Page header */
+  .page-header { padding: 18px 16px 0; margin-bottom: 14px; }
+  .page-title { font-size: 30px !important; }
+  .page-sub { font-size: 11px; }
 
-  /* Cards — 2 sloupce na mobilu */
+  /* Cards — 2 sloupce, kompaktní */
   .cards {
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 8px;
-    padding: 0 12px;
-    margin-bottom: 16px;
+    gap: 8px; padding: 0 12px; margin-bottom: 14px;
   }
-  .card { padding: 12px 12px; }
-  .card-val { font-size: 20px !important; }
+  .card { padding: 12px 14px; }
+  .card-val { font-size: 22px !important; }
   .card-label { font-size: 9px; }
+  .card-sub { font-size: 9px; }
 
   /* Tracking bar */
-  .tracking-bar-wrap { margin: 0 12px 16px; }
-  .tracking-legend { flex-wrap: wrap; gap: 8px; }
+  .tracking-bar-wrap { margin: 0 12px 14px; padding: 12px 14px; }
+  .tracking-bar-label { font-size: 10px; }
+  .tracking-legend { flex-wrap: wrap; gap: 6px; font-size: 9px; }
 
-  /* Controls — filtry jako scroll řada */
+  /* Filter controls — horizontální scroll */
   .controls {
-    padding: 0 12px;
+    padding: 0 12px 4px;
     overflow-x: auto;
     flex-wrap: nowrap !important;
     gap: 6px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
   .controls::-webkit-scrollbar { display: none; }
-  .sort-wrap { margin-left: 0; flex-shrink: 0; }
+  .filter-btn { padding: 6px 12px; font-size: 11px; flex-shrink: 0; }
+  .sort-wrap { flex-shrink: 0; }
 
-  /* Tabulka — zjednodušená na mobilu */
-  table { font-size: 11px; }
-  th, td { padding: 8px 8px; }
+  /* Tabulka — jen Klient + Sazba na mobilu */
+  table { font-size: 13px; }
+  th { padding: 10px 12px; font-size: 10px; }
+  td { padding: 12px 12px; }
 
-  /* Skryj sloupce Poměr a Status na mobilu, nech jen název + sazbu */
-  th:nth-child(5), td:nth-child(5),  /* Status */
-  th:nth-child(6), td:nth-child(6)   /* Poměr */
-  { display: none; }
+  /* Skryj Příjem, Hodiny, Status, Poměr — nech jen Klient a Sazbu */
+  th:nth-child(2), td:nth-child(2),
+  th:nth-child(3), td:nth-child(3),
+  th:nth-child(5), td:nth-child(5),
+  th:nth-child(6), td:nth-child(6) { display: none; }
 
-  /* Příjmy sloupec — zkrátit */
-  th:nth-child(2), td:nth-child(2) { font-size: 10px; }
+  /* Sazba — zvýrazni */
+  td:nth-child(4) { font-size: 15px; font-weight: 700; padding-right: 16px; }
+  th:nth-child(4) { text-align: right; padding-right: 16px; }
 
-  /* Client modal — fullscreen na mobilu */
+  /* Klient název */
+  .client-name { font-size: 14px; }
+
+  /* Badge ve zkrácené verzi */
+  .badge { font-size: 9px; padding: 2px 6px; }
+
+  /* Client modal — fullscreen */
   #client-modal > div {
-    margin: 0 !important;
-    max-width: 100% !important;
-    min-height: 100vh;
-    border-radius: 0 !important;
-    padding: 20px 16px !important;
+    margin: 0 !important; max-width: 100% !important;
+    min-height: 100vh; border-radius: 0 !important;
+    padding: 24px 18px 100px !important;
   }
 
-  /* Mobilní bottom nav */
+  /* Bottom nav — větší, pohodlnější */
   .mobile-bottom-nav {
     display: flex !important;
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
+    position: fixed; bottom: 0; left: 0; right: 0;
     background: var(--s1);
     border-top: 1px solid var(--border);
     z-index: 100;
-    padding: 0;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
   .mobile-nav-btn {
-    flex: 1;
-    background: none;
-    border: none;
-    padding: 10px 4px 8px;
+    flex: 1; background: none; border: none;
+    padding: 12px 4px 10px;
     font-family: 'Manrope', sans-serif;
-    font-size: 9px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--muted);
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3px;
+    font-size: 10px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    color: var(--muted); cursor: pointer;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 4px;
     transition: color 0.15s;
+    -webkit-tap-highlight-color: transparent;
   }
-  .mobile-nav-btn .icon { font-size: 18px; line-height: 1; }
+  .mobile-nav-btn .icon { font-size: 22px; line-height: 1; }
   .mobile-nav-btn.active { color: var(--accent); }
+  .mobile-nav-btn.active .icon { transform: scale(1.1); }
 
-  /* Rok/měsíc nav v draweru místo sidebar */
+  /* Year nav v draweru */
   #year-nav { display: flex; flex-direction: column; gap: 2px; }
 
   /* Footer */
-  footer { margin: 16px 12px 0; }
+  footer { margin: 16px 12px 0; font-size: 9px; }
+
+  /* Anomaly + API modal */
+  #api-modal > div, #anomaly-modal > div {
+    margin: 20px auto !important;
+    width: 92% !important;
+    max-width: 100% !important;
+  }
+
 }
 
 /* Desktop — schovej mobilní elementy */
