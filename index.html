@@ -761,8 +761,8 @@ function loadExcel(input) {
         const key = `${sheetYear}-${String(monthNum).padStart(2,'0')}`;
         const existing = months[key] || {};
         months[key] = {
-          rawCu: existing.rawCu || '',
-          rawRev: rev, // store with original names from Excel
+          cuHours: existing.cuHours || {},
+          revenue: rev, // store with original names from Excel
           workers: existing.workers || 5,
           month: monthNum,
           year: sheetYear,
@@ -814,8 +814,8 @@ function selectEditMonth(key) {
   document.getElementById('edit-month-label').textContent = label;
   document.getElementById('workers-input').value = (m && m.workers) || 5;
   // Update badges
-  const hasCu = !!(m && (m.rawCu || Object.keys(m.cuTime||{}).length));
-  const hasRev = !!(m && Object.keys(m.rawRev||m.revenue||{}).length);
+  const hasCu = !!(m && m.cuHours && Object.keys(m.cuHours).length);
+  const hasRev = !!(m && m.revenue && Object.keys(m.revenue).length);
   const cuBadge = document.getElementById('cu-badge');
   const revBadge = document.getElementById('rev-badge');
   if (cuBadge) {
@@ -844,7 +844,7 @@ function selectEditMonth(key) {
 
 function ensureMonth(key, month, year) {
   if (!months[key]) {
-    months[key] = { cuTime: {}, revenue: {}, workers: 5, month, year };
+    months[key] = { cuHours: {}, revenue: {}, jkSplit: {}, workers: 5, month, year };
   }
 }
 
@@ -1373,18 +1373,15 @@ function showClientDetail(name) {
   const rows = [];
   for (const key of allKeys) {
     const m = months[key];
-    const parsedCu = m.rawCu ? parseCuText(m.rawCu) : (m.cuTime || {});
-    const rawRev = m.rawRev || m.revenue || {};
+    const parsedCu = parseCuFromApi(m.cuHours || {});
+    const parsedRev = parseRevFromApi(m.revenue || {});
     let hours = 0;
     for (const [c, h] of Object.entries(parsedCu)) {
-      if (c === canon) {
-        const effectiveH = (m.cuOverrides && m.cuOverrides[c] !== undefined) ? m.cuOverrides[c] : h;
-        hours += effectiveH;
-      }
+      if (c === canon) hours += h;
     }
     let revenue = 0;
-    for (const [n, v] of Object.entries(rawRev)) {
-      if (canonical(n) === canon) revenue += v;
+    for (const [c, v] of Object.entries(parsedRev)) {
+      if (c === canon) revenue += v;
     }
     if (hours > 0 || revenue > 0) {
       const rate = (hours && revenue) ? Math.round(revenue / hours) : null;
@@ -2195,7 +2192,7 @@ async function loadRevenueFromSheets() {
 
     // json.data = { "Klient": castka, ... }
     if (!months[key]) months[key] = { year, month, workers: 5 };
-    months[key].rawRev = json.data;
+    months[key].revenue = json.data;
 
 
     const count = Object.keys(json.data).length;
@@ -2239,8 +2236,8 @@ function renderMonthGrid() {
       const key = `${year}-${String(mo).padStart(2,'0')}`;
       const m = months[key];
       const isCurr = key === currKey;
-      const hasCu = !!(m && (m.rawCu || Object.keys(m.cuTime||{}).length));
-      const hasRev = !!(m && Object.keys(m.rawRev||m.revenue||{}).length);
+      const hasCu = !!(m && m.cuHours && Object.keys(m.cuHours).length);
+      const hasRev = !!(m && m.revenue && Object.keys(m.revenue).length);
       let cls = 'mgrid-cell';
       if (isCurr) cls += ' curr-month';
       else if (hasCu && hasRev) cls += ' complete';
