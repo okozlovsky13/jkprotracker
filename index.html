@@ -152,6 +152,175 @@ footer{font-size:10px;color:var(--dim);margin-top:40px;padding-top:16px;border-t
 .mgrid-cell.partial { border-color: rgba(200,255,0,0.4); }
 .mgrid-cell.curr-month { border-color: rgba(255,60,60,0.5); color: var(--red); }
 .mgrid-cell .cell-dots { font-size: 7px; margin-top: 2px; display: flex; justify-content: center; gap: 2px; }
+
+/* ═══════════════════════════════════════════
+   MOBILNÍ LAYOUT (max-width: 768px)
+   ═══════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* Layout — sidebar schovat, main přes celou šířku */
+  .app { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .main { padding: 0 0 80px 0; }
+
+  /* Mobilní top bar */
+  .mobile-topbar {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--s1);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .mobile-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: var(--accent);
+  }
+  .mobile-menu-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 3px;
+    padding: 6px 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  /* Mobilní drawer navigace */
+  .mobile-drawer {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+  }
+  .mobile-drawer.open { display: block; }
+  .mobile-drawer-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(30,25,20,0.5);
+  }
+  .mobile-drawer-panel {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 280px;
+    background: var(--s1);
+    padding: 24px 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .mobile-drawer-close {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: var(--muted);
+    cursor: pointer;
+    margin-bottom: -8px;
+  }
+
+  /* Main content padding */
+  .page-header { padding: 16px 16px 0; margin-bottom: 16px; }
+  .page-title { font-size: 28px !important; }
+
+  /* Cards — 2 sloupce na mobilu */
+  .cards {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px;
+    padding: 0 12px;
+    margin-bottom: 16px;
+  }
+  .card { padding: 12px 12px; }
+  .card-val { font-size: 20px !important; }
+  .card-label { font-size: 9px; }
+
+  /* Tracking bar */
+  .tracking-bar-wrap { margin: 0 12px 16px; }
+  .tracking-legend { flex-wrap: wrap; gap: 8px; }
+
+  /* Controls — filtry jako scroll řada */
+  .controls {
+    padding: 0 12px;
+    overflow-x: auto;
+    flex-wrap: nowrap !important;
+    gap: 6px;
+    margin-bottom: 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .controls::-webkit-scrollbar { display: none; }
+  .sort-wrap { margin-left: 0; flex-shrink: 0; }
+
+  /* Tabulka — zjednodušená na mobilu */
+  table { font-size: 11px; }
+  th, td { padding: 8px 8px; }
+
+  /* Skryj sloupce Poměr a Status na mobilu, nech jen název + sazbu */
+  th:nth-child(5), td:nth-child(5),  /* Status */
+  th:nth-child(6), td:nth-child(6)   /* Poměr */
+  { display: none; }
+
+  /* Příjmy sloupec — zkrátit */
+  th:nth-child(2), td:nth-child(2) { font-size: 10px; }
+
+  /* Client modal — fullscreen na mobilu */
+  #client-modal > div {
+    margin: 0 !important;
+    max-width: 100% !important;
+    min-height: 100vh;
+    border-radius: 0 !important;
+    padding: 20px 16px !important;
+  }
+
+  /* Mobilní bottom nav */
+  .mobile-bottom-nav {
+    display: flex !important;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--s1);
+    border-top: 1px solid var(--border);
+    z-index: 100;
+    padding: 0;
+  }
+  .mobile-nav-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 10px 4px 8px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    transition: color 0.15s;
+  }
+  .mobile-nav-btn .icon { font-size: 18px; line-height: 1; }
+  .mobile-nav-btn.active { color: var(--accent); }
+
+  /* Rok/měsíc nav v draweru místo sidebar */
+  #year-nav { display: flex; flex-direction: column; gap: 2px; }
+
+  /* Footer */
+  footer { margin: 16px 12px 0; }
+}
+
+/* Desktop — schovej mobilní elementy */
+@media (min-width: 769px) {
+  .mobile-topbar { display: none !important; }
+  .mobile-bottom-nav { display: none !important; }
+  .mobile-drawer { display: none !important; }
+}
 </style>
 </head>
 <body>
@@ -177,6 +346,66 @@ footer{font-size:10px;color:var(--dim);margin-top:40px;padding-top:16px;border-t
 </div>
 
 <div class="app">
+
+<!-- MOBILNÍ TOP BAR -->
+<div class="mobile-topbar">
+  <div class="mobile-logo">J&amp;K PRO</div>
+  <div style="display:flex;align-items:center;gap:8px">
+    <span id="mobile-role-badge" style="font-size:9px;color:var(--muted);font-family:'DM Mono',monospace"></span>
+    <button class="mobile-menu-btn" onclick="openMobileDrawer()">☰</button>
+  </div>
+</div>
+
+<!-- MOBILNÍ DRAWER -->
+<div class="mobile-drawer" id="mobile-drawer">
+  <div class="mobile-drawer-backdrop" onclick="closeMobileDrawer()"></div>
+  <div class="mobile-drawer-panel">
+    <button class="mobile-drawer-close" onclick="closeMobileDrawer()">×</button>
+    <div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:var(--accent)">J&amp;K PRO</div>
+      <div style="font-size:9px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.1em">RENTABILITA KLIENTŮ</div>
+    </div>
+    <div>
+      <div class="nav-section">Pohled</div>
+      <div class="nav" style="margin-top:4px">
+        <button class="nav-btn active" onclick="setView('all',this);closeMobileDrawer()">📊 Celé období</button>
+        <button class="nav-btn" onclick="setView('prev',this);closeMobileDrawer()">📅 Minulý měsíc</button>
+        <button class="nav-btn" onclick="setView('curr',this);closeMobileDrawer()">🔴 Aktuální měsíc</button>
+        <button class="nav-btn" onclick="setView('team',this);closeMobileDrawer()">👥 Tým</button>
+      </div>
+    </div>
+    <div>
+      <div class="nav-section">Rok / Měsíc</div>
+      <div id="year-nav-mobile" style="display:flex;flex-direction:column;gap:2px;margin-top:4px"></div>
+    </div>
+    <div style="margin-top:auto;display:flex;flex-direction:column;gap:8px;padding-top:16px;border-top:1px solid var(--border)">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;color:var(--muted)">
+        <input type="checkbox" id="hide-finance-mobile" onchange="applyHideFinanceMobile()" style="accent-color:var(--accent)">
+        Skrýt finance
+      </label>
+      <button class="nav-btn" onclick="refreshData();closeMobileDrawer()">↺ Obnovit data</button>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILNÍ BOTTOM NAV -->
+<div class="mobile-bottom-nav">
+  <button class="mobile-nav-btn active" id="mnav-all" onclick="setView('all',this);syncMobileNav('all')">
+    <span class="icon">📊</span>Celé
+  </button>
+  <button class="mobile-nav-btn" id="mnav-prev" onclick="setView('prev',this);syncMobileNav('prev')">
+    <span class="icon">📅</span>Minulý
+  </button>
+  <button class="mobile-nav-btn" id="mnav-curr" onclick="setView('curr',this);syncMobileNav('curr')">
+    <span class="icon">🔴</span>Aktuální
+  </button>
+  <button class="mobile-nav-btn" id="mnav-team" onclick="setView('team',this);syncMobileNav('team')">
+    <span class="icon">👥</span>Tým
+  </button>
+  <button class="mobile-nav-btn" id="mnav-menu" onclick="openMobileDrawer()">
+    <span class="icon">☰</span>Více
+  </button>
+</div>
 
 <!-- SIDEBAR -->
 <aside class="sidebar">
@@ -2418,6 +2647,50 @@ function setMonthView(key, btn) {
   document.getElementById('month-title').textContent = `${MONTH_NAMES[m.month].toUpperCase()} ${m.year}`;
   document.getElementById('month-sub').textContent = `${m.workers} lidí · ${key}`;
   renderView('month-content', buildDataset(cu, rev), capacity, `${MONTH_NAMES[m.month]} ${m.year}`, internalHours, obchodTotal, vedeniTotal, kontrolaTotal);
+}
+
+
+// ─── MOBILNÍ NAVIGACE ─────────────────────────────────────────────
+function openMobileDrawer() {
+  document.getElementById('mobile-drawer').classList.add('open');
+  // Sync year nav to mobile drawer
+  const desktopYearNav = document.getElementById('year-nav');
+  const mobileYearNav  = document.getElementById('year-nav-mobile');
+  if (desktopYearNav && mobileYearNav) {
+    mobileYearNav.innerHTML = desktopYearNav.innerHTML;
+    // Fix onclick handlers - add closeMobileDrawer
+    mobileYearNav.querySelectorAll('button').forEach(btn => {
+      const orig = btn.getAttribute('onclick') || '';
+      if (!orig.includes('closeMobileDrawer')) {
+        btn.setAttribute('onclick', orig + ';closeMobileDrawer()');
+      }
+    });
+  }
+  // Sync role badge
+  const rb = document.getElementById('role-badge');
+  const mrb = document.getElementById('mobile-role-badge');
+  if (rb && mrb) mrb.textContent = rb.textContent;
+}
+
+function closeMobileDrawer() {
+  document.getElementById('mobile-drawer').classList.remove('open');
+}
+
+function syncMobileNav(view) {
+  document.querySelectorAll('.mobile-nav-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('mnav-' + view);
+  if (btn) btn.classList.add('active');
+}
+
+function applyHideFinanceMobile() {
+  const hide = document.getElementById('hide-finance-mobile')?.checked;
+  const main = document.querySelector('.main');
+  if (!main) return;
+  if (hide) main.classList.add('hide-finance');
+  else main.classList.remove('hide-finance');
+  // Sync desktop checkbox
+  const desktop = document.getElementById('hide-finance');
+  if (desktop) desktop.checked = !!hide;
 }
 
 // ─── INIT ─────────────────────────────────────────────────────────
